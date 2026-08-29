@@ -1,0 +1,60 @@
+:root {
+  --primary-bg-color: black;
+  --primary-fg-color: white;
+  --primary-accent-color: #FF4696;
+  --primary-accent-bg-color: #1E1033;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  font-family: "Inter", sans-serif;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-fg-color);
+}
+
+button {
+  border: none;
+  font-size: 16px;
+  background-color: var(--primary-accent-bg-color);
+  color: var(--primary-accent-color);
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  max-width: 200px;
+}
+
+button:hover {
+  cursor: pointer;
+  box-shadow: var(--primary-accent-color) 5px 2px 10px;
+}
+
+button:disabled {
+  cursor: default;
+  box-shadow: none;
+  color: gray;
+}
+
+ol {
+  list-style: none;
+  counter-reset: num;
+}
+
+ol li {
+  counter-increment: num;
+}
+
+li {
+  margin: 10px 0px;
+}
+
+ol li::before {
+  content: counter(num) ": ";
+  color: var(--primary-accent-color);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
