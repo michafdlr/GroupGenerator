@@ -28,6 +28,15 @@
   list-style: square;
 }
 
+.group-container > ul > li:hover {
+  cursor: grab;
+}
+
+.group-container > ul > li:active {
+  cursor: grabbing;
+}
+
+
 .group-form-container {
   display: flex;
   flex-direction: column;
