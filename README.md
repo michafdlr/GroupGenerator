@@ -1,75 +1,43 @@
-# React + TypeScript + Vite
+# 🎲 Zufallsgruppen
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Eine moderne Web-App zum schnellen und einfachen Erstellen von zufälligen Gruppen.
 
-Currently, two official plugins are available:
+**Zufallsgruppen** ermöglicht es, Personen unkompliziert und fair per Zufall auf Gruppen zu verteilen. Die App eignet sich besonders für den Einsatz im Unterricht, kann aber überall dort verwendet werden, wo schnell zufällige Gruppen gebildet werden sollen.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+- 🎲 Zufällige Einteilung von Personen in Gruppen
+- 🍀 Zufällige Auswahl von Personen einer Gruppe
+- 👥 Individueller Import von Personen über eine csv-Datei
+- ⚖️ Gleichmäßige Verteilung auf die Gruppen
+- 🔀 Gruppen jederzeit neu mischen
+- 📱 Responsive Design für Desktop, Tablet und Smartphone
+- ⚡ Schnelle und intuitive Bedienung
+- 🆓 Kostenlos und ohne Registrierung nutzbar
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🖥️ Anwendungsfälle
 
-## Expanding the ESLint configuration
+**Zufallsgruppen** eignet sich besonders für:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 🏫 Unterricht und Schule
+- 👥 Gruppenarbeiten
+- 🎓 Workshops und Seminare
+- 🎮 Spiele und Veranstaltungen
+- 🤝 Teambuilding
+- 🎉 Private Aktivitäten
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Beispiel
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. Namen der Personen über eine csv-Datei importieren
+2. Gewünschte Anzahl oder Größe der Gruppen festlegen
+3. Gruppen generieren
+4. Zufällige Gruppeneinteilung anzeigen
+5. Bei Bedarf erneut mischen
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🚀 Lokale Installation
 
-```
+Repository klonen:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+git clone https://github.com/michafdlr/zufallsgruppen.git
 ```
