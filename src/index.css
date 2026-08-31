@@ -17,6 +17,10 @@ body {
   color: var(--primary-fg-color);
 }
 
+h1, h2, h3 {
+  color: var(--primary-accent-color)
+}
+
 button {
   border: none;
   font-size: 16px;
@@ -37,6 +41,7 @@ button:disabled {
   cursor: default;
   box-shadow: none;
   color: gray;
+  cursor:not-allowed;
 }
 
 ol {

@@ -213,7 +213,7 @@ function App() {
 
       <div className='form-container'>
         <form onSubmit={handleSubmitGroups} className='group-form-container'>
-          <h2>Zufallsgruppen erstellen</h2>
+          <h3>Zufallsgruppen erstellen</h3>
           <label>
             Gruppenanzahl:
             <input type='number' name='groupcount' id='groupcount' min={1} max={users.length} defaultValue={groupCount}/>
@@ -223,7 +223,7 @@ function App() {
         </form>
 
         <form onSubmit={handleSubmitRandomSelection} className='group-form-container'>
-          <h2>Zufällige Personen auswählen</h2>
+          <h3>Zufällige Personen auswählen</h3>
           <label>
             Anzahl Personen:
             <input type='number' name='randomPersonCount' id='randomPersonCount' min={1} max={users.length} defaultValue={randomPersonCount}/>
