@@ -26,6 +26,9 @@ function App() {
   const [groups, setGroups] = useState<User[][]>(() => generateGroups(users, groupCount))
   const [preview, setPreview] = useState<boolean>(true)
   const [wrongFormat, setWrongFormat] = useState<boolean>(false)
+  const [inputSelection, setInputSelection] = useState<"" | "csv-input" | "manual-input">("")
+  const [textAreaEmpty, setTextAreaEmpty] = useState<boolean>(true)
+  const [textValue, setTextValue] = useState<string>("")
 
   function successNotify() {
     toast.success('Datei erfolgreich hochgeladen!', {
@@ -53,6 +56,89 @@ function App() {
       theme: "colored",
       // transition: Bounce,
     });
+  }
+
+  function checkTextFieldEmpty(e: ChangeEvent<HTMLTextAreaElement, HTMLTextAreaElement>) {
+    setTextAreaEmpty(e.currentTarget.value.trim() === "")
+  }
+
+  function handleSubmitPersons(e: SyntheticEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    const formJson = Object.fromEntries(formData.entries())
+    const names = (formJson.nameInput as string).split(",").map(name => name.trim()).map((name: string): User => ({
+      id: nextId++,
+      vorname: name
+    }))
+    console.log(names)
+    setUsers(names)
+    setCsvParsed(true)
+    setGroups([])
+    setGroupGeneratorActive(false)
+    setRandomSelectorActive(false)
+  }
+
+  function selectionView() {
+    if (inputSelection === "") {
+      return null
+    } else if (inputSelection === "csv-input") {
+      return (
+        <>
+          <div className='file-input-container'>
+            <label htmlFor="csvFile" className='file-input'>CSV wählen</label>
+
+            <input type='file' name='csvFile' id='csvFile' accept='.csv' onChange={(e) => csvHandler(e)}/>
+
+            <button onClick={() => {
+                parseHandler(file)
+                setGroupGeneratorActive(false)
+                setRandomSelectorActive(false)
+              }
+            } disabled={!file}>Datei erneut verarbeiten</button>
+          </div>
+
+          {file ? <p>Hochgeladene Datei: <span style={{fontStyle: "italic"}}>{file.name}</span></p> : null}
+
+          {randomUsers()}
+        </>
+      )
+    }
+    return (
+      <div>
+        <p>Gib die Namen durch Kommata getrennt in das Textfeld ein.</p>
+
+
+        <form onSubmit={handleSubmitPersons} className='name-input-container'>
+          <label htmlFor="nameInput">Namen: </label>
+          <textarea id='nameInput'
+            name='nameInput'
+            rows={10} cols={40}
+            onChange={(e) => {
+              setTextValue(e.target.value)
+              checkTextFieldEmpty(e)
+              }
+            }
+            value={textValue}
+            >
+          </textarea>
+
+          <div className='button-container'>
+            <button type='submit' disabled={textAreaEmpty}>Liste erzeugen</button>
+            <button type="button" onClick={() => {
+              // e.preventDefault()
+              setUsers([]);
+              setTextValue("")
+              setTextAreaEmpty(true)
+              }}>
+                Liste leeren
+              </button>
+          </div>
+        </form>
+
+        {randomUsers()}
+      </div>
+    )
   }
 
   function randomUsers() {
@@ -141,7 +227,6 @@ function App() {
   function csvHandler(e: ChangeEvent<HTMLInputElement, HTMLInputElement>) {
     if (e.currentTarget.files) {
       const inputFile = e.currentTarget.files[0]
-      console.log(inputFile)
       setGroupGeneratorActive(false)
       setRandomSelectorActive(false)
       setFile(inputFile)
@@ -149,11 +234,16 @@ function App() {
     }
   }
 
+  function inputSelectionHandler(e: ChangeEvent<HTMLSelectElement, HTMLSelectElement>) {
+    const value = e.currentTarget.value as "" | "csv-input" | "manual-input"
+    console.log(value)
+    setInputSelection(value)
+  }
+
   function parseHandler(file: File | undefined) {
     if(!file) {
       console.log("No file selected")
       setUsers([])
-      // setGroups(generateGroups(importedUsers, groupCount))
       setCsvParsed(false)
       return
     }
@@ -184,8 +274,10 @@ function App() {
         console.log(importedUsers)
         setWrongFormat(false)
         setUsers(importedUsers)
-        setGroups(generateGroups(importedUsers, groupCount))
+        // setGroups(generateGroups(importedUsers, groupCount))
         setCsvParsed(true)
+        setTextValue(importedUsers.map(user => user.vorname).join(", "))
+        setTextAreaEmpty(false)
         successNotify()
       }
     })
@@ -195,21 +287,20 @@ function App() {
     <>
       <h1>Zufallsgenerator</h1>
       <p>
-        Importiere die Namen der Personen, für die du den Zufallsgenerator nutzen willst als .csv-Datei. Die Datei muss die Spalte "Vorname" enthalten. Optional kann eine weitere Spalte "Nachname" inkludiert sein. Alle weiteren Spalten werde nicht beachtet. Du kannst Zufallsgruppen erzeugen oder zufällig Personen auslosen.
+        Importiere die Namen der Personen, für die du den Zufallsgenerator nutzen willst als .csv-Datei oder gib die Namen manuell ein. Die .csv-Datei muss die Spalte "Vorname" enthalten. Optional kann eine weitere Spalte "Nachname" inkludiert sein. Alle weiteren Spalten werden nicht beachtet. Du kannst Zufallsgruppen erzeugen oder zufällig Personen auslosen.
       </p>
 
-
-      <div className='file-input-container'>
-        <label htmlFor="csvFile" className='file-input'>CSV wählen</label>
-
-        <input type='file' name='csvFile' id='csvFile' accept='.csv' onChange={(e) => csvHandler(e)}/>
+      <div className='input-selection-container'>
+        <h2>Wähle eine Option zum Import deiner Personen</h2>
+        <label htmlFor='input-selection'>Methode: </label>
+        <select id="input-selection" onChange={(e) => inputSelectionHandler(e)}>
+          <option value={""}>--Wähle eine Option--</option>
+          <option value={"csv-input"}>CSV-Import</option>
+          <option value={"manual-input"}>Manuelle Eingabe</option>
+        </select>
       </div>
 
-      {file ? <p>Hochgeladene Datei: <span style={{fontStyle: "italic"}}>{file.name}</span></p> : null}
-
-      {
-        randomUsers()
-      }
+      {selectionView()}
 
       <div className='form-container'>
         <form onSubmit={handleSubmitGroups} className='group-form-container'>
@@ -226,7 +317,7 @@ function App() {
           <h3>Zufällige Personen auswählen</h3>
           <label>
             Anzahl Personen:
-            <input type='number' name='randomPersonCount' id='randomPersonCount' min={1} max={users.length} defaultValue={randomPersonCount}/>
+            <input type='number' name='randomPersonCount' id='randomPersonCount' min={1} max={users.length} defaultValue={randomPersonCount} className='input-box'/>
           </label>
 
           <button type='submit' disabled={!csvParsed}>{randomSelectorActive ? "Neu auswählen" : "Auswählen"}</button>
