@@ -2,7 +2,7 @@
 
 Eine moderne Web-App zum schnellen und einfachen Erstellen von zufälligen Gruppen.
 
-**Zufallsgruppen** ermöglicht es, Personen unkompliziert und fair per Zufall auf Gruppen zu verteilen. Die App eignet sich besonders für den Einsatz im Unterricht, kann aber überall dort verwendet werden, wo schnell zufällige Gruppen gebildet werden sollen.
+**Zufallsgruppen** ermöglicht es, Personen unkompliziert und fair per Zufall auf Gruppen zu verteilen. Die App eignet sich besonders für den Einsatz im Unterricht, kann aber überall dort verwendet werden, wo schnell zufällige Gruppen gebildet werden sollen. Probiere es [hier](https://michafdlr.github.io/GroupGenerator/) aus
 
 ## ✨ Features
 
